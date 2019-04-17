@@ -1,4 +1,4 @@
-# AWS Resources Reports Generation
+# AWS Resources CSV Reports Generation
 AWS cli, jq and some extras Unix-likes utilities to generate csv reports files about existing resources in AWS Cloud
 
 PREREQUISITE
