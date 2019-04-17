@@ -33,4 +33,4 @@ vpc-00241a8f8b6955555;10.288.16.0/20;available;dopt-0e578e7faf555550e;false;dev_
 
 Then you can just copy and paste in the popular spreadsheet software and play with the data in the way that you like:
 
-Generating the report in a spreadsheet software: [![alt text](/CreatingVPCReport.gif)]
+Generating the report in a spreadsheet software: ![alt text](/CreatingVPCReport.gif)
