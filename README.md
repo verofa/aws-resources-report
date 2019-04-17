@@ -4,7 +4,7 @@ AWS cli, jq and some extras Unix-likes utilities to generate csv reports files a
 PREREQUISITE
 
 - [AWS Cli](https://docs.aws.amazon.com/cli/latest/userguide/install-linux-al2017.html) 
-- [JQ](https://stedolan.github.io/jq/download/)
+- [jq, is like sed for JSON data](https://stedolan.github.io/jq/download/)
 - [Sed, a stream editor](https://www.gnu.org/software/sed/manual/sed.html)
 
 - VCPs
