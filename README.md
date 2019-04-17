@@ -55,8 +55,8 @@ sed -i '1 i\SubnetName;SubnetId;CidrBlock;IpAddCount;AvailabilityZone;VpcId' sub
 aws ec2 describe-route-tables| jq --raw-output '.RouteTables[]' > route_tables.json
 
 #2 Get the data definition of the RouteTables
-cat RouteTables.json | jq -r '([.Tags[]?|select(.["Key"] == "Name")|.Value]|join(";")) +";"+ (.Associations[]?|.SubnetId) +";"+ .RouteTableId +";"+ .VpcId +";"+ (.PropagatingVgws[]?|.GatewayId)' > route_tables.csv
+cat RouteTables.json | jq -r '([.Tags[]?|select(.["Key"] == "Name")|.Value]|join(";")) +";"+ (.Associations[]?|.SubnetId) +";"+ (.Associations[]?|.Main|tostring) +";"+ .RouteTableId +";"+ .VpcId +";"+ (.PropagatingVgws[]?|.GatewayId)' > route_tables.csv
 
 # Add headers to the file report 
-sed -i '1 i\RTName;SubnetId;RouteTableId;VpcId;GatewayId' route_tables.csv
+sed -i '1 i\RTName;SubnetId;MainRT;RouteTableId;VpcId;GatewayId' route_tables.csv
 ~~~~
