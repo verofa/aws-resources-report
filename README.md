@@ -1,5 +1,5 @@
 # AWS Inventory Resources - CSV Reports Generation
-AWS cli, jq and some extras Unix-likes utilities to generate csv reports files about existing resources in AWS Cloud
+AWS cli, jq and some extras Unix-likes utilities to generate csv reports files about existing resources in AWS Cloud.
 
 PREREQUISITE
 
@@ -7,7 +7,10 @@ PREREQUISITE
 - [jq, is like sed for JSON data](https://stedolan.github.io/jq/download/)
 - [Sed, a stream editor](https://www.gnu.org/software/sed/manual/sed.html)
 
+
+So let's start, for instance, getting the AWS inventory resource list of our VPCs
 - VCPs
+
 To get the main information about existing VPCs
 
 ~~~~
