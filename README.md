@@ -34,3 +34,16 @@ vpc-00241a8f8b6955555;10.288.16.0/20;available;dopt-0e578e7faf555550e;false;dev_
 Then you can just copy and paste in the popular spreadsheet software and play with the data in the way that you like:
 
 Generating the report in a spreadsheet software: ![alt text](/CreatingVPCReport.gif)
+
+- Subnets
+
+~~~~
+#1 Generate Subnets JSON file
+aws ec2 describe-subnets | jq --raw-output '.Subnets[]' > subnets.json
+
+#2 Get the data definition of the subnets
+cat subnets.json | jq -r '([.Tags[]?|select(.["Key"] == "Name")|.Value]|join(";")) +";"+ .SubnetId +";"+ .CidrBlock +";"+ (.AvailableIpAddressCount|tostring) +";"+ .AvailabilityZone +";"+ .VpcId' > subnets_report.csv
+
+#3 Add headers to the file report 
+sed -i '1 i\SubnetName;SubnetId;CidrBlock;IpAddCount;AvailabilityZone;VpcId' subnets_report.csv
+~~~~
