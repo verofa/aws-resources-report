@@ -41,9 +41,22 @@ Generating the report in a spreadsheet software: ![alt text](/CreatingVPCReport.
 #1 Generate Subnets JSON file
 aws ec2 describe-subnets | jq --raw-output '.Subnets[]' > subnets.json
 
-#2 Get the data definition of the subnets
+#2 Get the data definition of the Subnets
 cat subnets.json | jq -r '([.Tags[]?|select(.["Key"] == "Name")|.Value]|join(";")) +";"+ .SubnetId +";"+ .CidrBlock +";"+ (.AvailableIpAddressCount|tostring) +";"+ .AvailabilityZone +";"+ .VpcId' > subnets_report.csv
 
 #3 Add headers to the file report 
 sed -i '1 i\SubnetName;SubnetId;CidrBlock;IpAddCount;AvailabilityZone;VpcId' subnets_report.csv
+~~~~
+
+- Routes Tables
+
+~~~~
+#1 Generate RouteTables JSON file
+aws ec2 describe-route-tables| jq --raw-output '.RouteTables[]' > route_tables.json
+
+#2 Get the data definition of the RouteTables
+cat RouteTables.json | jq -r '([.Tags[]?|select(.["Key"] == "Name")|.Value]|join(";")) +";"+ (.Associations[]?|.SubnetId) +";"+ .RouteTableId +";"+ .VpcId +";"+ (.PropagatingVgws[]?|.GatewayId)' > route_tables.csv
+
+# Add headers to the file report 
+sed -i '1 i\RTName;SubnetId;RouteTableId;VpcId;GatewayId' route_tables.csv
 ~~~~
