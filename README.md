@@ -9,7 +9,7 @@ PREREQUISITE
 
 
 So let's start, for instance, getting the AWS inventory resource list of our VPCs
-- VCPs
+- VCPs Inventory
 
 To get the main information about existing VPCs
 
@@ -38,7 +38,7 @@ Then you can just copy and paste in the popular spreadsheet software and play wi
 
 Generating the report in a spreadsheet software: ![alt text](/CreatingVPCReport.gif)
 
-- Subnets
+- Subnets Inventory
 
 ~~~~
 #1 Generate Subnets JSON file
@@ -51,7 +51,7 @@ cat subnets.json | jq -r '([.Tags[]?|select(.["Key"] == "Name")|.Value]|join(";"
 sed -i '1 i\SubnetName;SubnetId;CidrBlock;IpAddCount;AvailabilityZone;VpcId' subnets_report.csv
 ~~~~
 
-- Routes Tables
+- Routes Tables Inventory
 
 ~~~~
 #1 Generate RouteTables JSON file
@@ -62,4 +62,14 @@ cat RouteTables.json | jq -r '([.Tags[]?|select(.["Key"] == "Name")|.Value]|join
 
 # Add headers to the file report 
 sed -i '1 i\RTName;SubnetId;MainRT;RouteTableId;VpcId;GatewayId' route_tables.csv
+~~~~
+
+
+- EC2 Instance Inventory (WP)
+~~~~
+aws ec2 describe-instances --region=ap-southeast-2| jq --raw-output '.Reservations[].Instances[] | reduce .Tags[] as $t ( { InstanceId, PrivateIpAddress }; .[$t.Key] = $t.Value ) | [ .Name, .InstanceId, .PrivateIpAddress ]'
+
+aws ec2 describe-instances --region=ap-southeast-2| jq --raw-output '.Reservations[].Instances[] | reduce .Tags[] as $t ( { InstanceId, PrivateIpAddress, KeyName }; .[$t.Key] = $t.Value ) '
+
+aws ec2 describe-instances --region=ap-southeast-2| jq --raw-output '.Reservations[].Instances[] | reduce .Tags[] as $t ( { InstanceId, PrivateIpAddress, KeyName }; .[$t.Key] = $t.Value ) | [ .Name, .InstanceId, .PrivateIpAddress, .KeyName ]'
 ~~~~
